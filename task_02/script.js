@@ -3,12 +3,10 @@ const taskForm = document.getElementById("task-form");
 const taskInput = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
 
-// Array to store todos
-let tasks = [];
-
 // Function to render todos
 function showAllTasks() {
   // Clear previous list
+  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
   taskList.innerHTML = "";
   console.log(tasks);
 
@@ -83,24 +81,40 @@ function showAllTasks() {
 
 // Function to add a new task
 function addTask(taskTitle) {
-  tasks.push({ title: taskTitle, completed: false });
-  showAllTasks();
+  const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  if (Array.isArray(allTasks)) {
+    allTasks.push({ title: taskTitle, completed: false });
+    localStorage.setItem("tasks", JSON.stringify(allTasks));
+    showAllTasks();
+  }
 }
 
 // Function to delete a task
 function deleteTask(index) {
-  tasks.splice(index, 1);
-  showAllTasks();
+  const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  if (Array.isArray(allTasks)) {
+    allTasks.splice(index, 1);
+    localStorage.setItem("tasks", JSON.stringify(allTasks));
+    showAllTasks();
+  }
 }
 
 function updateTaskAsDone(index) {
-  tasks[index].completed = true;
-  showAllTasks();
+  const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  if (Array.isArray(allTasks)) {
+    allTasks[index].completed = true;
+    localStorage.setItem("tasks", JSON.stringify(allTasks));
+    showAllTasks();
+  }
 }
 
 function updateTaskAsUnDone(index) {
-  tasks[index].completed = false;
-  showAllTasks();
+  const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  if (Array.isArray(allTasks)) {
+    allTasks[index].completed = false;
+    localStorage.setItem("tasks", JSON.stringify(allTasks));
+    showAllTasks();
+  }
 }
 
 // Form submission handler
