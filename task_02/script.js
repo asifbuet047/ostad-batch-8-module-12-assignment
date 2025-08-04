@@ -2,6 +2,8 @@
 const taskForm = document.getElementById("task-form");
 const taskInput = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
+const customToast = document.getElementById("custom-toast");
+const customToastMessage = document.getElementById("toast-message");
 
 // Function to render todos
 function showAllTasks() {
@@ -103,6 +105,7 @@ function addTask(taskTitle) {
     allTasks.push({ title: taskTitle, completed: false });
     localStorage.setItem("tasks", JSON.stringify(allTasks));
     showAllTasks();
+    showToast("Task has been added", 1);
   }
 }
 
@@ -110,6 +113,7 @@ function addTask(taskTitle) {
 function deleteTask(index) {
   const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
   if (Array.isArray(allTasks)) {
+    showToast(`${allTasks[index].title} is deleted`, 2);
     allTasks.splice(index, 1);
     localStorage.setItem("tasks", JSON.stringify(allTasks));
     showAllTasks();
@@ -122,6 +126,7 @@ function updateTaskAsDone(index) {
     allTasks[index].completed = true;
     localStorage.setItem("tasks", JSON.stringify(allTasks));
     showAllTasks();
+    showToast(`${allTasks[index].title} is completed`, 3);
   }
 }
 
@@ -145,5 +150,24 @@ taskForm.addEventListener("submit", function (e) {
     alert("Please give a task title");
   }
 });
+
+function showToast(title, type) {
+  customToastMessage.innerText = title;
+  switch (type) {
+    case 1:
+      customToast.style.backgroundColor = "#8ddbe0";
+      break;
+    case 2:
+      customToast.style.backgroundColor = "#EE4266";
+      break;
+    case 3:
+      customToast.style.backgroundColor = "#3C5A14";
+      customToast.style.color = "#FFFFFF";
+    default:
+      break;
+  }
+  const toast = new bootstrap.Toast(customToast);
+  toast.show();
+}
 
 showAllTasks();
