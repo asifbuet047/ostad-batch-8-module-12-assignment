@@ -47,8 +47,9 @@ function showAllTasks() {
           deleteButton.style.borderStyle = "solid";
           deleteButton.style.margin = "2px";
           deleteButton.textContent = "Delete this task";
-          deleteButton.addEventListener("click", () => showModal(index));
-
+          deleteButton.addEventListener("click", () =>
+            deleteTaskWithModal(index)
+          );
           buttonGroup.appendChild(completeButton);
           buttonGroup.appendChild(deleteButton);
           item.appendChild(buttonGroup);
@@ -63,8 +64,9 @@ function showAllTasks() {
           deleteButton.style.borderStyle = "solid";
           deleteButton.style.margin = "2px";
           deleteButton.textContent = "Delete this task";
-          deleteButton.addEventListener("click", () => showModal(index));
-
+          deleteButton.addEventListener("click", () =>
+            deleteTaskWithModal(index)
+          );
           buttonGroup.appendChild(deleteButton);
           item.appendChild(buttonGroup);
           taskList.appendChild(item);
@@ -93,15 +95,20 @@ function addTask(taskTitle) {
   }
 }
 
-// Function to delete a task
-function deleteTask(index) {
+// Function to delete a task with modal
+
+function deleteTaskWithModal(index) {
   const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-  if (Array.isArray(allTasks)) {
+  customModalTitle.innerText = "Want to delete?";
+  customModalBody.innerHTML = `<span style="font-weight: bold">${allTasks[index].title}</span> task will be deleted. Click confirm to continue.`;
+  const modal = new bootstrap.Modal(customModal);
+  modal.show(); // this line should be bottom as bootstrap.modal.hide() wont work if show() called
+  customModalButton.addEventListener("click", () => {
     showToast(`${allTasks[index].title} is deleted`, 2);
     allTasks.splice(index, 1);
     localStorage.setItem("tasks", JSON.stringify(allTasks));
     showAllTasks();
-  }
+  });
 }
 
 function updateTaskAsDone(index) {
@@ -145,18 +152,6 @@ function showToast(title, type) {
   }
   const toast = new bootstrap.Toast(customToast);
   toast.show();
-}
-
-function showModal(index) {
-  const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-  customModalTitle.innerText = "Want to delete?";
-  customModalBody.innerText = `${allTasks[index].title} task will be deleted. Click confirm to continue.`;
-  const modal = new bootstrap.Modal(customModal);
-  customModalButton.addEventListener("click", () => {
-    deleteTask(index);
-    modal.hide();
-  });
-  modal.show(); // this line should be bottom as bootstrap.modal.hide() wont work if show() called
 }
 
 showAllTasks();
