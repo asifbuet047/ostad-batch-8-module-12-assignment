@@ -4,7 +4,10 @@ const taskInput = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
 const customToast = document.getElementById("custom-toast");
 const customToastMessage = document.getElementById("toast-message");
-
+const customModal = document.getElementById("custom-modal");
+const customModalTitle = document.getElementById("custom-modal-title");
+const customModalBody = document.getElementById("custom-modal-body");
+const customModalButton = document.getElementById("custom-modal-button");
 // Function to render todos
 function showAllTasks() {
   // Clear previous list
@@ -44,12 +47,8 @@ function showAllTasks() {
           deleteButton.style.borderStyle = "solid";
           deleteButton.style.margin = "2px";
           deleteButton.textContent = "Delete this task";
-          deleteButton.addEventListener("click", () => {
-            const newName = prompt("Delete Your task!", each.title);
-            if (newName && newName.trim() != "") {
-              deleteTask(index);
-            }
-          });
+          deleteButton.addEventListener("click", () => showModal(index));
+
           buttonGroup.appendChild(completeButton);
           buttonGroup.appendChild(deleteButton);
           item.appendChild(buttonGroup);
@@ -57,16 +56,6 @@ function showAllTasks() {
         } else {
           item.style.textDecoration = "line-through";
           const buttonGroup = document.createElement("div");
-          const completeButton = document.createElement("button");
-          completeButton.className = "btn btn-success btn-sm";
-          completeButton.style.borderWidth = "2px";
-          completeButton.style.borderColor = "black";
-          completeButton.style.borderStyle = "solid";
-          completeButton.style.margin = "2px";
-          completeButton.textContent = "Incomplete this Task";
-          completeButton.addEventListener("click", () => {
-            updateTaskAsUnDone(index);
-          });
           const deleteButton = document.createElement("button");
           deleteButton.className = "btn btn-warning btn-sm";
           deleteButton.style.borderWidth = "2px";
@@ -74,13 +63,8 @@ function showAllTasks() {
           deleteButton.style.borderStyle = "solid";
           deleteButton.style.margin = "2px";
           deleteButton.textContent = "Delete this task";
-          deleteButton.addEventListener("click", () => {
-            const newName = prompt("Delete Your task!", each.title);
-            if (newName && newName.trim() != "") {
-              deleteTask(index);
-            }
-          });
-          buttonGroup.appendChild(completeButton);
+          deleteButton.addEventListener("click", () => showModal(index));
+
           buttonGroup.appendChild(deleteButton);
           item.appendChild(buttonGroup);
           taskList.appendChild(item);
@@ -130,15 +114,6 @@ function updateTaskAsDone(index) {
   }
 }
 
-function updateTaskAsUnDone(index) {
-  const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-  if (Array.isArray(allTasks)) {
-    allTasks[index].completed = false;
-    localStorage.setItem("tasks", JSON.stringify(allTasks));
-    showAllTasks();
-  }
-}
-
 // Form submission handler
 taskForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -156,9 +131,11 @@ function showToast(title, type) {
   switch (type) {
     case 1:
       customToast.style.backgroundColor = "#8ddbe0";
+      customToast.style.color = "#000000";
       break;
     case 2:
-      customToast.style.backgroundColor = "#EE4266";
+      customToast.style.backgroundColor = "#F69DB0";
+      customToast.style.color = "#000000";
       break;
     case 3:
       customToast.style.backgroundColor = "#3C5A14";
@@ -168,6 +145,18 @@ function showToast(title, type) {
   }
   const toast = new bootstrap.Toast(customToast);
   toast.show();
+}
+
+function showModal(index) {
+  const allTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  customModalTitle.innerText = "Want to delete?";
+  customModalBody.innerText = `${allTasks[index].title} task will be deleted. Click confirm to continue.`;
+  const modal = new bootstrap.Modal(customModal);
+  customModalButton.addEventListener("click", () => {
+    deleteTask(index);
+    modal.hide();
+  });
+  modal.show(); // this line should be bottom as bootstrap.modal.hide() wont work if show() called
 }
 
 showAllTasks();
