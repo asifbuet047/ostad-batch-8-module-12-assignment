@@ -1,0 +1,74 @@
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #d9afd9, #97d9e1);
+}
+
+.form-card {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-group input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.gender-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.gender-group label {
+  font-weight: normal;
+}
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
