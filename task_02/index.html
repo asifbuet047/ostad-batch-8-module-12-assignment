@@ -12,9 +12,23 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h2 class="mb-4" style="text-align: center; font-weight: bold">
-        Simple Task Manager Application
-      </h2>
+      <div class="row mb-5 justify-content-center align-items-center">
+        <h1
+          class="col-10"
+          style="text-align: center; font-weight: bold;"
+        >
+          Simple Task Manager Application
+        </h1>
+        <div class="col-2" style="border: 2px solid black;border-radius: 10px;">
+          <div class="row">
+            <h3 class="col-12" style="text-align: center; font-weight: lighter">
+              Task Count
+            </h3>
+            <h1 id="task-count" class="col-12" style="text-align: center; font-weight: bold">0</h1>
+          </div>
+        </div>
+      </div>
+
       <form id="task-form" class="mb-3">
         <div class="input-group">
           <input
@@ -22,9 +36,8 @@
             id="task-input"
             class="form-control"
             placeholder="Enter your task"
-            required
           />
-          <div class="input-group-append">
+          <div class="input-group-append" style="margin-left: 5px">
             <button class="btn btn-primary" type="submit">Add Task</button>
           </div>
         </div>
@@ -36,7 +49,7 @@
     </div>
 
     <!-- Toast container -->
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1">
       <div class="toast" role="alert" id="custom-toast">
         <div class="toast-header">
           <strong class="me-auto">Notification</strong>

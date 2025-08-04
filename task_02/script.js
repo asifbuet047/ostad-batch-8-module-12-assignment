@@ -8,6 +8,7 @@ const customModal = document.getElementById("custom-modal");
 const customModalTitle = document.getElementById("custom-modal-title");
 const customModalBody = document.getElementById("custom-modal-body");
 const customModalButton = document.getElementById("custom-modal-button");
+const taskCount = document.getElementById("task-count");
 // Function to render todos
 function showAllTasks() {
   // Clear previous list
@@ -16,6 +17,7 @@ function showAllTasks() {
 
   // show all tasks
   if (Array.isArray(tasks)) {
+    taskCount.innerText = `${tasks.length}`;
     if (tasks.length > 0) {
       tasks.forEach((each, index) => {
         const item = document.createElement("li");
@@ -129,7 +131,7 @@ taskForm.addEventListener("submit", function (e) {
     addTask(taskTitle);
     taskInput.value = ""; //clear each time when task is added into the list
   } else {
-    alert("Please give a task title");
+    showToast("Please give a task title", 2);
   }
 });
 
